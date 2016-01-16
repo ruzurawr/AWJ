@@ -1,10 +1,7 @@
-package hello;
+package hello.controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.PathVariable;
+import hello.models.Produs;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,7 +52,7 @@ public class ProdusController {
   @RequestMapping(value="/produs/{id}", method = RequestMethod.PUT)
   public ResponseEntity put(@PathVariable("id") int id) {
     for(Produs p : this.produse) {
-      if(f.getId() == id) {
+      if(p.getId() == id) {
         p.setId(23);
         p.setName("ciocolata");
 		p.setPrice(5.46);
@@ -65,12 +62,29 @@ public class ProdusController {
     return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
   }
 
-
-
   @RequestMapping(value="/produs/{id}/{nume}/{pret}", method = RequestMethod.POST)
    public ResponseEntity post(@PathVariable("id") int id, @PathVariable("nume") String nume, @PathVariable("pret") float pret) {
     Produs p = new Produs(id, nume, pret);
     produse.add(p);
     return new ResponseEntity<Produs>(p, new HttpHeaders(), HttpStatus.OK);
+  }
+
+  @RequestMapping(value="/produs", method = RequestMethod.POST)
+  public ResponseEntity create(@RequestBody Produs p4) {
+    produse.add(p4);
+    return new ResponseEntity<Produs>(p4, new HttpHeaders(), HttpStatus.OK);
+  }
+  @RequestMapping(value="/produs/{initialId}/{id}/{name}/{pret}", method = RequestMethod.PUT)
+  public ResponseEntity modify(@PathVariable("initialId") int initialId, @PathVariable("id") int id, @PathVariable("name") String name,
+                               @PathVariable("pret") double pret) {
+    for(Produs p : this.produse) {
+      if(p.getId() == initialId) {
+        p.setId(id);
+        p.setName(name);
+        p.setPrice(pret);
+        return new ResponseEntity<Produs>(p, new HttpHeaders(), HttpStatus.OK);
+      }
+    }
+    return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
   }
 }

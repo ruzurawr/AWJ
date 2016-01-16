@@ -1,19 +1,20 @@
-package hello;
+package hello.models;
 
 import java.util.List;
 import java.util.ArrayList;
 
 public class Produs {
-  private String name;
   private int id;
-  private float price;
+  private String name;
+  private double price;
 
-  public Categorie() {}
+  public Produs(int id, String name, double price) {
+    this.name = name;
+    this.id = id;
+    this.price = price;
+  }
 
-  public Categorie(int id, String name, float price) {
-      this.name = name;
-      this.id = id;
-	  this.price = price;
+  public Produs() {
   }
 
   public String getName() {
@@ -23,12 +24,16 @@ public class Produs {
   public int getId() {
     return this.id;
   }
-  
-  public float getPrice() {
-    return this.price;
-  }
-  
-  public void setName(String name) {
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setName(String name) {
     this.name = name;
   }
   
@@ -36,7 +41,5 @@ public class Produs {
     this.id = id;
   }
   
-  public void setPrice(float price) {
-    this.price = price;
-  }
+
 }

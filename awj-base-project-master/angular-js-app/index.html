@@ -1,21 +1,475 @@
 <!DOCTYPE html>
+<!--suppress ALL -->
 <html ng-app="blog">
 <head>
-  <title>My application</title>
+  <title>My web application</title>
   <link rel="stylesheet" media="all" href="css/bootstrap.min.css">
   <link rel="stylesheet" media="all" href="css/custom.css">
 </head>
 <body>
+<div class="container">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="">AWJ Base Project</a>
+      </div>
 
-  <div class="container">
-    <div ng-controller="HomeController">
-      <h1>{{ helloWorld }}</h1>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><a href="#">Persoane</a></li>
+          <li><a href="#">----</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<hr/>
+
+<div class="container">
+  <div>
+    <h1>{{ helloWorld }}</h1>
+
+    <p>Writing this live into the browser...</p>
+  </div>
+</div>
+
+<hr/>
+
+<!-- /resources1 -->
+<div class="container" ng-controller="HomeController">
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <tr>
+                            <td> {{ modalPersoane.id }}</td>
+                            <td> {{ modalPersoane.name }} </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  <h1>Persoane</h1>
+
+  <h2>Listeaza toate persoanele</h2>
+
+  <table class="table table-bordered">
+    <tr>
+      <th ng-repeat="field in fields">{{field | uppercase}}</th>
+      <th style="width:210px;">OPTIONS</th>
+    </tr>
+    <tr ng-repeat="persoana in persoane" data-id="{{persoana.id}}">
+      <td>{{ persoana.id }}</td>
+      <td>{{ persoana.name }}</td>
+      <td>
+        <a href="">
+            <button ng-click="modalFct(persoana.id)" class="btn btn-info btn-xs" data-toggle="modal" data-target="#myModal">
+                Open
+                <span class="glyphicon glyphicon-folder-open"></span>
+            </button>
+        </a>
+        <a href="">
+          <button ng-click="setUpdatePerson(persoana)" class="btn btn-info btn-xs">
+            Edit
+            <span class="glyphicon glyphicon-edit"></span>
+          </button>
+
+        </a>
+        <a href="index.html">
+          <button ng-click="deletePersoana(persoana.id)" class="btn btn-danger btn-xs">
+            Remove
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+  <div class="row">
+    <div class="col-md-3">
+      <h2>Editeaza persoana</h2>
+
+      <form action="" method="">
+        <div class="form-group">
+          <label for="attribute1">ID</label>
+          <input type="text" class="form-control" id="attribute1" placeholder="ID" ng-model="editPerson.id">
+        </div>
+        <div class="form-group">
+          <label for="attribute2">NUME</label>
+          <input type="text" class="form-control" id="attribute2" placeholder="NUME" ng-model="editPerson.name">
+        </div>
+        <button type="submit" class="btn btn-info" ng-click="updatePerson(editPerson)">Save</button>
+      </form>
+    </div>
+
+
+    <div class="col-md-3 col-md-offset-6">
+      <h2>Adauga o persoana</h2>
+
+      <form action="" method="">
+        <div class="form-group">
+          <label for="attribute1">ID</label>
+          <input type="text" class="form-control" id="attribute1" placeholder="ID" ng-model="persoana.id">
+        </div>
+        <div class="form-group">
+          <label for="attribute2">NUME</label>
+          <input type="text" class="form-control" id="attribute2" placeholder="NUME" ng-model="persoana.name">
+        </div>
+
+        <button ng-click="addPersoana(persoana)" class="btn btn-success">Add</button>
+      </form>
     </div>
   </div>
 
-  <script src="js/jquery-1.11.3.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/angular.min.js"></script>
-  <script src="js/app.js"></script>
+</div>
+
+<hr/>
+
+<hr/>
+
+<div class="container" ng-controller="ActorController">
+
+    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <tr>
+                            <td> {{ modalActor.id }}</td>
+                            <td> {{ modalActor.name }} </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h1>Actori</h1>
+
+    <h2>Listeaza toti actorii</h2>
+
+    <table class="table table-bordered">
+        <tr>
+            <th ng-repeat="field in fields">{{field | uppercase}}</th>
+            <th style="width:210px;">OPTIONS</th>
+        </tr>
+        <tr ng-repeat="actor in actori" data-id="{{actor.id}}">
+            <td>{{ actor.id }}</td>
+            <td>{{ actor.name }}</td>
+            <td>
+                <a href="">
+                    <button ng-click="modalFct(actor.id)" class="btn btn-info btn-xs" data-toggle="modal" data-target="#myModal1">
+                        Open
+                        <span class="glyphicon glyphicon-folder-open"></span>
+                    </button>
+                </a>
+                <a href="">
+                    <button ng-click="setUpdateActor(actor)" class="btn btn-info btn-xs">
+                        Edit
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </button>
+
+                </a>
+                <a href="index.html">
+                    <button ng-click="deleteActor(actor.id)" class="btn btn-danger btn-xs">
+                        Remove
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </a>
+            </td>
+        </tr>
+    </table>
+
+    <div class="row">
+        <div class="col-md-3">
+            <h2>Editeaza actor</h2>
+
+            <form action="" method="">
+                <div class="form-group">
+                    <label for="attribute1">ID</label>
+                    <input type="text" class="form-control" id="attribute1" placeholder="ID" ng-model="editActor.id">
+                </div>
+                <div class="form-group">
+                    <label for="attribute2">NUME</label>
+                    <input type="text" class="form-control" id="attribute2" placeholder="NUME" ng-model="editActor.name">
+                </div>
+                <button type="submit" class="btn btn-info" ng-click="updateActor(editActor)">Save</button>
+            </form>
+        </div>
+
+
+        <div class="col-md-3 col-md-offset-6">
+            <h2>Adauga un actor</h2>
+
+            <form action="" method="">
+                <div class="form-group">
+                    <label for="attribute1">ID</label>
+                    <input type="text" class="form-control" id="attribute1" placeholder="ID" ng-model="actor.id">
+                </div>
+                <div class="form-group">
+                    <label for="attribute2">NUME</label>
+                    <input type="text" class="form-control" id="attribute2" placeholder="NUME" ng-model="actor.name">
+                </div>
+
+                <button ng-click="addActor(actor)" class="btn btn-success">Add</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<hr/>
+
+<hr/>
+
+<div class="container" ng-controller="FilmController">
+
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <tr>
+                            <td> {{ modalFilm.id }}</td>
+                            <td> {{ modalFilm.name }} </td>
+                            <td> {{ modalFilm.year }} </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h1>Filme</h1>
+
+    <h2>Listeaza toate filmele</h2>
+
+    <table class="table table-bordered">
+        <tr>
+            <th ng-repeat="field in fields">{{field | uppercase}}</th>
+            <th style="width:210px;">OPTIONS</th>
+        </tr>
+        <tr ng-repeat="film in filme" data-id="{{film.id}}">
+            <td>{{ film.id }}</td>
+            <td>{{ film.name }}</td>
+            <td>{{ film.year }}</td>
+            <td>
+                <a href="">
+                    <button ng-click="modalFct(film.id)" class="btn btn-info btn-xs" data-toggle="modal" data-target="#myModal2">
+                        Open
+                        <span class="glyphicon glyphicon-folder-open"></span>
+                    </button>
+                </a>
+                <a href="">
+                    <button ng-click="setUpdateFilm(film)" class="btn btn-info btn-xs">
+                        Edit
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </button>
+
+                </a>
+                <a href="index.html">
+                    <button ng-click="deleteFilm(film.id)" class="btn btn-danger btn-xs">
+                        Remove
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </a>
+            </td>
+        </tr>
+    </table>
+
+    <div class="row">
+        <div class="col-md-3">
+            <h2>Editeaza film</h2>
+
+            <form action="" method="">
+                <div class="form-group">
+                    <label for="attribute1">ID</label>
+                    <input type="text" class="form-control" id="attribute1" placeholder="ID" ng-model="editFilm.id">
+                </div>
+                <div class="form-group">
+                    <label for="attribute2">NUME</label>
+                    <input type="text" class="form-control" id="attribute2" placeholder="NUME" ng-model="editFilm.name">
+                </div>
+                <div class="form-group">
+                    <label for="attribute3">YEAR</label>
+                    <input type="text" class="form-control" id="attribute3" placeholder="YEAR" ng-model="editFilm.year">
+                </div>
+                <button type="submit" class="btn btn-info" ng-click="updateFilm(editFilm)">Save</button>
+            </form>
+        </div>
+
+
+        <div class="col-md-3 col-md-offset-6">
+            <h2>Adauga un film</h2>
+
+            <form action="" method="">
+                <div class="form-group">
+                    <label for="attribute1">ID</label>
+                    <input type="text" class="form-control" id="attribute1" placeholder="ID" ng-model="film.id">
+                </div>
+                <div class="form-group">
+                    <label for="attribute2">NUME</label>
+                    <input type="text" class="form-control" id="attribute2" placeholder="NUME" ng-model="film.name">
+                </div>
+                <div class="form-group">
+                    <label for="attribute3">YEAR</label>
+                    <input type="text" class="form-control" id="attribute3" placeholder="YEAR" ng-model="film.year">
+                </div>
+
+                <button ng-click="addFilm(film)" class="btn btn-success">Add</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<hr/>
+
+<hr/>
+
+<div class="container" ng-controller="ProdusController">
+
+    <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <tr>
+                            <td> {{ modalProdus.id }}</td>
+                            <td> {{ modalProdus.name }} </td>
+                            <td> {{ modalProdus.price }} </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <h1>Produse</h1>
+
+    <h2>Listeaza toate produsele</h2>
+
+    <table class="table table-bordered">
+        <tr>
+            <th ng-repeat="field in fields">{{field | uppercase}}</th>
+            <th style="width:210px;">OPTIONS</th>
+        </tr>
+        <tr ng-repeat="produs in produse" data-id="{{produs.id}}">
+            <td>{{ produs.id }}</td>
+            <td>{{ produs.name }}</td>
+            <td>{{ produs.price }}</td>
+            <td>
+                <a href="">
+                    <button ng-click="modalFct(produs.id)" class="btn btn-info btn-xs" data-toggle="modal" data-target="#myModal3">
+                        Open
+                        <span class="glyphicon glyphicon-folder-open"></span>
+                    </button>
+                </a>
+                <a href="">
+                    <button ng-click="setUpdateProdus(produs)" class="btn btn-info btn-xs">
+                        Edit
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </button>
+
+                </a>
+                <a href="index.html">
+                    <button ng-click="deleteProdus(produs.id)" class="btn btn-danger btn-xs">
+                        Remove
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </a>
+            </td>
+        </tr>
+    </table>
+
+    <div class="row">
+        <div class="col-md-3">
+            <h2>Editeaza produs</h2>
+
+            <form action="" method="">
+                <div class="form-group">
+                    <label for="attribute1">ID</label>
+                    <input type="text" class="form-control" id="attribute1" placeholder="ID" ng-model="editProdus.id">
+                </div>
+                <div class="form-group">
+                    <label for="attribute2">NUME</label>
+                    <input type="text" class="form-control" id="attribute2" placeholder="NUME" ng-model="editProdus.name">
+                </div>
+                <div class="form-group">
+                    <label for="attribute3">PRICE</label>
+                    <input type="text" class="form-control" id="attribute3" placeholder="PRICE" ng-model="editProdus.price">
+                </div>
+                <button type="submit" class="btn btn-info" ng-click="updateProdus(editProdus)">Save</button>
+            </form>
+        </div>
+
+
+        <div class="col-md-3 col-md-offset-6">
+            <h2>Adauga un produs</h2>
+
+            <form action="" method="">
+                <div class="form-group">
+                    <label for="attribute1">ID</label>
+                    <input type="text" class="form-control" id="attribute1" placeholder="ID" ng-model="produs.id">
+                </div>
+                <div class="form-group">
+                    <label for="attribute2">NUME</label>
+                    <input type="text" class="form-control" id="attribute2" placeholder="NUME" ng-model="produs.name">
+                </div>
+                <div class="form-group">
+                    <label for="attribute3">PRICE</label>
+                    <input type="text" class="form-control" id="attribute3" placeholder="PRICE" ng-model="produs.price">
+                </div>
+
+                <button ng-click="addProdus(produs)" class="btn btn-success">Add</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<hr/>
+
+<hr/>
+
+<div class="container">
+  <footer class="footer">
+    <p class="text-muted pull-left">AWJ Base Project &copy; 2015-2016</p>
+    <p class="text-muted pull-right">Soare Ruxandra Ioana 331 AA</p>
+  </footer>
+</div>
+<script src="js/jquery-1.11.3.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>

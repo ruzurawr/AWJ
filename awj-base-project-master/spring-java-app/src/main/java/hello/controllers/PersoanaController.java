@@ -1,10 +1,7 @@
-package hello;
+package hello.controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.PathVariable;
+import hello.models.Persoana;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +38,7 @@ public class PersoanaController {
     return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
   }
 
-  @RequestMapping(value="/persoana/{id}", method = RequestMethod.DEL)
+  @RequestMapping(value="/persoana/{id}", method = RequestMethod.DELETE)
   public ResponseEntity remove(@PathVariable("id") int id) {
     for(Persoana p : this.persoane) {
       if(p.getId() == id) {
@@ -51,4 +48,21 @@ public class PersoanaController {
     }
     return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
   }
+
+  @RequestMapping(value="/persoana", method = RequestMethod.POST)
+  public ResponseEntity create(@RequestBody Persoana p4) {
+    persoane.add(p4);
+    return new ResponseEntity<Persoana>(p4, new HttpHeaders(), HttpStatus.OK);
+  }
+    @RequestMapping(value="/persoana/{initialId}/{id}/{name}", method = RequestMethod.PUT)
+    public ResponseEntity modify(@PathVariable("initialId") int initialId, @PathVariable("id") int id, @PathVariable("name") String name) {
+        for(Persoana p : this.persoane) {
+            if(p.getId() == initialId) {
+                p.setId(id);
+                p.setName(name);
+                return new ResponseEntity<Persoana>(p, new HttpHeaders(), HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
+    }
 }

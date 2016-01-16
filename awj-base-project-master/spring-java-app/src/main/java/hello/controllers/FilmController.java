@@ -1,10 +1,7 @@
-package hello;
+package hello.controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.PathVariable;
+import hello.models.Film;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,13 +62,30 @@ public class FilmController {
     return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
   }
 
-
-
   @RequestMapping(value="/film/{id}/{nume}/{an}", method = RequestMethod.POST)
    public ResponseEntity post(@PathVariable("id") int id, @PathVariable("nume") String nume, @PathVariable("an") int an) {
     Film f = new Film(id, nume, an);
     filme.add(f);
     return new ResponseEntity<Film>(f, new HttpHeaders(), HttpStatus.OK);
+  }
+
+  @RequestMapping(value="/film", method = RequestMethod.POST)
+  public ResponseEntity create(@RequestBody Film f4) {
+    filme.add(f4);
+    return new ResponseEntity<Film>(f4, new HttpHeaders(), HttpStatus.OK);
+  }
+  @RequestMapping(value="/film/{initialId}/{id}/{name}/{year}", method = RequestMethod.PUT)
+  public ResponseEntity modify(@PathVariable("initialId") int initialId, @PathVariable("id") int id, @PathVariable("name") String name,
+  @PathVariable("year") int year) {
+    for(Film f : this.filme) {
+      if(f.getId() == initialId) {
+        f.setId(id);
+        f.setName(name);
+        f.setYear(year);
+        return new ResponseEntity<Film>(f, new HttpHeaders(), HttpStatus.OK);
+      }
+    }
+    return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
   }
 }
 

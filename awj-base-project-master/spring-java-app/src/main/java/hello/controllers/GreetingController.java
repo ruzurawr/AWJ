@@ -1,6 +1,7 @@
-package hello;
-
+package hello.controllers;
 import java.util.concurrent.atomic.AtomicLong;
+
+import hello.models.Greeting;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;

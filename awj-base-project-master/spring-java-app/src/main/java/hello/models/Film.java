@@ -1,11 +1,11 @@
-package hello;
+package hello.models;
 
 import java.util.List;
 import java.util.ArrayList;
 
 public class Film {
-  private String name;
   private int id;
+  private String name;
   private int year;
 
   public Film() {}
